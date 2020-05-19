@@ -1,0 +1,57 @@
+configuration {
+    font:			   "Ubuntu 64";
+    show-icons:                     false;
+    icon-theme: 		    "Papirus";
+    drun-display-format:            "{name}";
+    disable-history:                false;
+    fullscreen:                     true;
+    hide-scrollbar: 		    true;
+    sidebar-mode: 		    false;
+}
+
+* {
+    background:                     #00000000;
+    background-color:               #00000066;
+    background-entry:               #00000033;
+    background-alt:                 #f2f2f215;
+    foreground:                     #f2f2f2EE;
+    foreground-selected:            #ffffffFF;
+    urgent:                         #E91E6366;
+    urgent-selected:                #E91E6377;
+    children:	   		    [ horibox ];
+}
+
+horibox {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    horizontal;
+    children:                       [ listview ];
+    margin:                         0px 0px 0px 0px;
+    padding:                        40% 5% 5% 40%;
+}
+
+listview {
+    background-color:               @background;
+    padding:                        0px 0px 0px 0px;
+    spacing:                        20px;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         horizontal;
+}
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    horizontal;
+    border-radius:                  100%;
+    padding:                        20px 20px 20px 20px;
+}
+
+element selected {
+    background-color:               @background-alt;
+    text-color:                     @foreground;
+    border:                   	    0px;
+    border-radius:                  100%;
+    border-color:                   @border;
+}
+
