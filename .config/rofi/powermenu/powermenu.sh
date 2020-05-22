@@ -1,7 +1,6 @@
 #!/bin/sh
 
 rofi_command="rofi -theme ~/.config/rofi/powermenu/powermenu.rasi"
-uptime=$(uptime -p | sed -e 's/up //g')
 
 # Options
 shutdown=""
@@ -12,7 +11,7 @@ logout=""
 # Variable Passed To Rofi
 options="$shutdown\n$reboot\n$lock\n$logout"
 
-chosen="$(echo -e "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-row 2)"
+chosen="$(echo -e "$options" | $rofi_command -dmenu -selected-row 0)"
 case $chosen in
     $shutdown)
         systemctl poweroff

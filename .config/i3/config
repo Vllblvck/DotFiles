@@ -25,11 +25,18 @@ mode "$mode_gaps" {
 	bindsym Escape mode "default"
 }
 
+# Opacity
+bindsym $mod+o mode "$mode_opacity"
+
+mode "$mode_opacity" {
+	bindsym Up exec picom-trans -c +10
+	bindsym Down exec picom-trans -c -10
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
-# Terminal
-bindsym $mod+Return exec termite 
 
 # Rofi 
 bindsym $mod+d exec sh ~/.config/rofi/launcher/launcher.sh
@@ -43,14 +50,24 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
 # Move focused window
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
 # Split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Shift+v split h
 
 # Split in vertical orientation
 bindsym $mod+v split v
@@ -59,9 +76,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+s layout stacking
+#bindsym $mod+t layout tabbed
+#bindsym $mod+e layout toggle split
 
 # Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -70,10 +87,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 
 # Focus the child container
-bindsym $mod+c focus child
+#bindsym $mod+c focus child
 
 # Workspace names
 set $ws1 "1"
@@ -128,6 +145,11 @@ mode "resize" {
         bindsym Down resize shrink height 10 px or 10 ppt
         bindsym Up resize grow height 10 px or 10 ppt
         bindsym Right resize shrink width 10 px or 10 ppt
+		
+        bindsym h resize grow width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsyh k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink width 10 px or 10 ppt
 
         # Back to normal
         bindsym Return mode "default"
@@ -139,16 +161,33 @@ bindsym $mod+r mode "resize"
 #Screenshot
 bindsym $mod+Shift+s exec flameshot gui
 
-#Launch apps
+#Assing apps to workspaces
+assign [title=terminal] 1
+assign [title=web] 2
+assign [class="Brave-browser"] 2
+assign [title=development] 3
+assign [class="code-oss"] 3
+assign [class="jetbrains=rider"] 3
+assign [title=music] 4
+assign [title=comunicators] 5
+assign [class="Caprine"] 5
+assign [class="qBittorrent"] 6
+
+#Keybinds for apps
+bindsym $mod+Return exec termite -t terminal
 bindsym $mod+w exec brave 
+bindsym $mod+s exec termite -e ranger
+bindsym $mod+m exec termite -e mocp -t music
+bindsym $mod+c exec caprine 
 
 # Autostart apps
 exec_always --no-startup-id sh ~/.config/polybar/launch.sh
-exec_always --no-startup-id dunst
 #exec_always --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }" 
 exec_always --no-startup-id picom --experimental-backends --backend glx
+exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 
 exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/greybeach.jpg
 exec --no-startup-id flameshot
 exec --no-startup-id pasystray
 exec --no-startup-id betterlockscreen -u ~/Pictures/wallpapers/greybeach.jpg
+exec --no-startup-id qbittorrent

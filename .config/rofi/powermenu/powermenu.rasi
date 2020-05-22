@@ -27,7 +27,7 @@ horibox {
     orientation:                    horizontal;
     children:                       [ listview ];
     margin:                         0px 0px 0px 0px;
-    padding:                        40% 5% 5% 40%;
+    padding:                        40% 0% 0% 35%;
 }
 
 listview {
