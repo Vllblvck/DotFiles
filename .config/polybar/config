@@ -1,7 +1,7 @@
 [colors]
-background = #22000000
-foreground = #f8f8f2
-alert = #ff0000
+background = #604c566a 
+foreground = #eceff4
+alert = #bf616a
 
 [bar/topbar]
 width = 100%
@@ -33,20 +33,23 @@ tray-maxsize = 15
 type = internal/i3
 format = <label-state>
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
 ws-icon-2 = 3;
 ws-icon-3 = 4;
 ws-icon-4 = 5;
-ws-icon-5 = 6;泌
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
 
 label-mode = %icon%
 label-mode-padding = 2
 
 label-focused = %icon%
 label-focused-padding = 2
-label-focused-underline = #99ffffff
-label-focused-background = #44000000
+label-focused-underline = #998fbcbb
+label-focused-background = #503b4252
 
 label-unfocused = %icon%
 label-unfocused-padding = 2
@@ -63,10 +66,11 @@ type = internal/date
 interval = 1
 
 date = %m/%d/%Y
-time =  %H:%M:%S
+time = %{F#8fbcbb}%{F-} %H:%M:%S
 
 format-prefix = 
-format-prefix-padding = 1 
+format-prefix-foreground = #8fbcbb
+format-prefix-padding = 2 
 
 label = %date%  %time%
 
@@ -75,7 +79,8 @@ type = internal/cpu
 interval = 1
 
 format-prefix = 
-format-prefix-padding = 1
+format-prefix-foreground = #8fbcbb
+format-prefix-padding = 2 
 
 label = %percentage%%
 
@@ -85,7 +90,8 @@ interval = 1
 
 format = <label>
 format-prefix = 
-format-prefix-padding =1
+format-prefix-foreground = #8fbcbb
+format-prefix-padding = 2
 
 label = %gb_used% / %gb_total%
 

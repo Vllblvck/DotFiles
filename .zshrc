@@ -5,8 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to oh-my-zsh installation.
+# Paths
 export ZSH="/home/vllblvck/.oh-my-zsh"
+export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
 
 #Plugins
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -22,16 +23,11 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 #aliases
-alias zshrc="vim /home/vllblvck/.zshrc"
-alias r="//usr/bin/ranger"
-alias notes="cd /home/vllblvck/Documents/ && vim mynotes.txt"
-alias ls="colorls"
-alias lsa="colorls -A"
-alias lsl="colorls -l"
-alias lsal="colorls -al"
+alias lsa="ls -A"
+alias lsl="ls -l"
+alias lsal="ls -Al"
 alias ..="cd .."
 alias bt="bashtop"
-alias orphans="sudo pacman -Rsn $(pacman -Qqtd)"
 alias yt="python3 ~/Projects/YtMusicDownloader/downloadytmusic.py"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
