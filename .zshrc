@@ -8,6 +8,7 @@ fi
 # Paths
 export ZSH="/home/vllblvck/.oh-my-zsh"
 export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
+export EDITOR="usr/bin/nvim"
 
 #Plugins
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -23,6 +24,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 #aliases
+alias v="nvim"
 alias lsa="ls -A"
 alias lsl="ls -l"
 alias lsal="ls -Al"
