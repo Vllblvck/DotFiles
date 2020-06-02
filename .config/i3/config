@@ -53,14 +53,14 @@ mode "$mode_opacity" {
 
 bindsym $mod+r mode "resize"
 mode "resize" {
-        bindsym Left resize grow width 10 px or 10 ppt
-        bindsym Down resize shrink height 10 px or 10 ppt
-        bindsym Up resize grow height 10 px or 10 ppt
-        bindsym Right resize shrink width 10 px or 10 ppt
-        bindsym h resize grow width 10 px or 10 ppt
-        bindsym j resize shrink height 10 px or 10 ppt
-        bindsyh k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -167,13 +167,15 @@ assign [class="qBittorrent"] $ws9
 
 #Keybinds for apps
 bindsym $mod+Return exec termite -t terminal
-bindsym $mod+w exec brave
+bindsym $mod+Shift+Return exec termite
 bindsym $mod+s exec termite -e ranger -t terminal
 bindsym $mod+m exec termite -e mocp -t music
-bindsym $mod+c exec caprine 
-bindsym $mod+Shift+s exec flameshot gui
+bindsym $mod+n exec termite -e pacmixer
 bindsym $mod+d exec sh ~/.config/rofi/launcher/launcher.sh
 bindsym $mod+x exec sh ~/.config/rofi/powermenu/powermenu.sh
+bindsym $mod+c exec caprine 
+bindsym $mod+w exec qutebrowser
+bindsym $mod+Shift+s exec flameshot gui
 
 # Autostart apps
 exec_always --no-startup-id sh ~/.config/polybar/launch.sh
@@ -182,5 +184,5 @@ exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
 exec --no-startup-id flameshot
-exec --no-startup-id betterlockscreen -u ~/Pictures/wallpapers/greybeach.jpg
-exec --no-startup-id qbittorrent
+exec --no-startup-id betterlockscreen -u ~/.config/wallpaper.jpg 
+#exec --no-startup-id qbittorrent

@@ -6,12 +6,12 @@ allow_bold = true
 #cell_width_scale = 1.0
 clickable_url = true
 #dynamic_title = true
-font = Monospace 9
+font = MesloLGS NF regular 10
 #fullscreen = true
 #icon_name = terminal
 mouse_autohide = true
 #scroll_on_output = false
-scroll_on_keystroke = true
+#scroll_on_keystroke = true
 # Length of the scrollback buffer, 0 disabled the scrollback buffer
 # and setting it to a negative value means "infinite scrollback"
 scrollback_lines = 10000
