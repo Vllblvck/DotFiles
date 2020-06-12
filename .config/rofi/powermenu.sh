@@ -1,12 +1,12 @@
 #!/bin/sh
 
-rofi_command="rofi -theme ~/.config/rofi/powermenu/powermenu.rasi"
+rofi_command="rofi -theme ~/.config/rofi/powermenu.rasi"
 
 # Options
-shutdown=""
-reboot=""
-lock=""
-logout=""
+shutdown="shutdown"
+reboot="reboot"
+lock="lock"
+logout="logout"
 
 # Variable Passed To Rofi
 options="$shutdown\n$reboot\n$lock\n$logout"

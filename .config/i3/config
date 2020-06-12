@@ -11,13 +11,13 @@ gaps outer 10
 # Borders
 #smart_borders on
 hide_edge_borders none
-for_window [class=".*"] border pixel 1 
+for_window [class=".*"] border pixel 2 
 new_window 1pixel
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #8fbcbb #8fbcbb #ffffff #8fbcbb   #8fbcbb
-client.focused_inactive #2e3440 #2e3440 #ffffff #2e3440   #2e3440 
-client.unfocused        #2e3440 #2e3440 #ffffff #2e3440   #2e3440
+client.focused          #458588 #458588 #ffffff #458588   #458588
+client.focused_inactive #282828 #282828 #ffffff #282828   #282828
+client.unfocused        #282828 #282828 #ffffff #282828   #282828
 client.urgent           #bf616a #bf616a #ffffff #bf616a   #bf616a
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
@@ -166,13 +166,13 @@ assign [class="Thunderbird"] $ws8
 assign [class="qBittorrent"] $ws9
 
 #Keybinds for apps
-bindsym $mod+Return exec termite -t terminal
-bindsym $mod+Shift+Return exec termite
-bindsym $mod+s exec termite -e ranger -t terminal
-bindsym $mod+m exec termite -e mocp -t music
-bindsym $mod+n exec termite -e pacmixer
-bindsym $mod+d exec sh ~/.config/rofi/launcher/launcher.sh
-bindsym $mod+x exec sh ~/.config/rofi/powermenu/powermenu.sh
+bindsym $mod+Return exec alacritty -t terminal
+bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+s exec alacritty -t terminal -e ranger 
+bindsym $mod+m exec alacritty -t music -e mocp 
+bindsym $mod+n exec alacritty -e pacmixer  
+bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/launcher.rasi
+bindsym $mod+x exec sh ~/.config/rofi/powermenu.sh
 bindsym $mod+c exec caprine 
 bindsym $mod+w exec qutebrowser
 bindsym $mod+Shift+s exec flameshot gui
@@ -182,7 +182,5 @@ exec_always --no-startup-id sh ~/.config/polybar/launch.sh
 exec_always --no-startup-id picom --experimental-backends --backend glx
 exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 
-exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
 exec --no-startup-id flameshot
 exec --no-startup-id betterlockscreen -u ~/.config/wallpaper.jpg 
-#exec --no-startup-id qbittorrent

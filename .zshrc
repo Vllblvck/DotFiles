@@ -9,28 +9,31 @@ fi
 export ZSH="/home/vllblvck/.oh-my-zsh"
 export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
 export EDITOR="usr/bin/nvim"
+export TERM="alacritty"
 
-#Plugins
+# Plugins
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=( 
- git
- colorize
- cp
  extract
- history 
  chucknorris
 )
 
 source $ZSH/oh-my-zsh.sh
 
-#aliases
+# Aliases
+alias ex="extract"
+alias r="ranger"
 alias v="nvim"
 alias lsa="ls -A"
 alias lsl="ls -l"
 alias lsal="ls -Al"
 alias ..="cd .."
 alias bt="bashtop"
-alias yt="python3 ~/Projects/YtMusicDownloader/downloadytmusic.py"
+alias yt="sh ~/Projects/Scripts/ytmusic.sh"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
+
+# Vi mode
+bindkey -v
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

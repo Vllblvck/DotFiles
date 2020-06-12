@@ -1,11 +1,11 @@
 [colors]
-background = #604c566a 
-foreground = #eceff4
-alert = #bf616a
+background = #AA282828
+foreground = #ebdbb2
+alert = #cc241d
 
 [bar/topbar]
 width = 100%
-height = 25
+height = 26
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -18,7 +18,7 @@ padding-right = 2
 module-margin-left = 2
 module-margin-right = 2
 
-font-0 = Ubuntu:style=Bold:size=10
+font-0 = Monospace 10
 font-1 = Font Awesome 5 Free, Font Awesome 5 Free Solid:style=Solid:size=10
 
 modules-left = i3 xwindow
@@ -48,8 +48,8 @@ label-mode-padding = 2
 
 label-focused = %icon%
 label-focused-padding = 2
-label-focused-underline = #998fbcbb
-label-focused-background = #503b4252
+label-focused-underline = #AB458588
+label-focused-background = #AB665c54
 
 label-unfocused = %icon%
 label-unfocused-padding = 2
@@ -66,10 +66,10 @@ type = internal/date
 interval = 1
 
 date = %m/%d/%Y
-time = %{F#8fbcbb}%{F-} %H:%M:%S
+time = %{F#458588}%{F-} %H:%M:%S
 
 format-prefix = 
-format-prefix-foreground = #8fbcbb
+format-prefix-foreground = #458588
 format-prefix-padding = 2 
 
 label = %date%  %time%
@@ -79,7 +79,7 @@ type = internal/cpu
 interval = 1
 
 format-prefix = 
-format-prefix-foreground = #8fbcbb
+format-prefix-foreground = #458588
 format-prefix-padding = 2 
 
 label = %percentage%%
@@ -90,7 +90,7 @@ interval = 1
 
 format = <label>
 format-prefix = 
-format-prefix-foreground = #8fbcbb
+format-prefix-foreground = #458588
 format-prefix-padding = 2
 
 label = %gb_used% / %gb_total%

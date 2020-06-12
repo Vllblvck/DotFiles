@@ -6,19 +6,19 @@
     geometry = "300x5-20+50"
     indicate_hidden = yes
     shrink = no
-    transparency = 50
+    transparency = 80 
     separator_height = 2
     padding = 12
     horizontal_padding = 12
-    frame_width = 3
-    frame_color = "#4c566a"
+    frame_width = 2 
+    frame_color = "#141414"
     separator_color = frame
     sort = yes
     idle_threshold = 120
 
     # Text
 
-    font = Ubuntu Bold 10
+    font = Monospace 9
     line_height = 4
     markup = full
     show_age_threshold = 60
@@ -68,23 +68,23 @@
 
 [shortcuts]
 
-    close = ctrl+space
+    close = ctrl+enter
     close_all = ctrl+shift+enter
     history = ctrl+grave
     context = ctrl+shift+period
 
 [urgency_low]
-    background = "#4c566a"
-    foreground = "#eceff4"
-    timeout = 10
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 5
 
 [urgency_normal]
-    background = "#4c566a"
-    foreground = "#eceff4"
-    timeout = 10
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 5
 
 [urgency_critical]
-    background = "#4c566a"
-    foreground = "#bf616a"
-    frame_color = "#4c566a"
+    background = "#282828"
+    foreground = "#ebdbb2"
+    frame_color = "#cc241d"
     timeout = 0
