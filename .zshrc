@@ -21,6 +21,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
+alias xconf="nvim ~/.xmonad/xmonad.hs"
+alias xbarconf="nvim ~/.xmobarrc"
 alias ex="extract"
 alias r="ranger"
 alias v="nvim"
