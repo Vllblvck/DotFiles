@@ -168,10 +168,10 @@ assign [class="qBittorrent"] $ws9
 #Keybinds for apps
 bindsym $mod+Return exec alacritty -t terminal
 bindsym $mod+Shift+Return exec alacritty
-bindsym $mod+s exec alacritty -t terminal -e ranger 
+bindsym $mod+s exec alacritty -e ranger 
 bindsym $mod+m exec alacritty -t music -e mocp 
 bindsym $mod+n exec alacritty -e pacmixer  
-bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/launcher.rasi
+bindsym $mod+d exec rofi -show run -theme ~/.config/rofi/launcher.rasi
 bindsym $mod+x exec sh ~/.config/rofi/powermenu.sh
 bindsym $mod+c exec caprine 
 bindsym $mod+w exec qutebrowser

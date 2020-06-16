@@ -9,12 +9,16 @@
 
 call plug#begin('~/.local/share/nvim/site/autoload/')
 
+"Misc
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } "Auto completion
 Plug 'scrooloose/nerdcommenter' "Auto comment
 Plug 'scrooloose/nerdtree' "File tree
-Plug 'morhetz/gruvbox' "Color scheme
 Plug 'neomake/neomake' "Code checking
 Plug 'vim-airline/vim-airline' "Status bar
+
+"Color schemes
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 
 "Python plugins
 Plug 'zchee/deoplete-jedi', { 'for': 'python' } " Required by autocompletion
@@ -56,7 +60,7 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-T> :NERDTreeToggle<CR>
 
 " Colorscheme
-colorscheme gruvbox
+colorscheme nord
 
 "Always yanking to clipboard
 set clipboard+=unnamedplus

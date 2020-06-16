@@ -1,24 +1,22 @@
 [global]
     # Display
-    
     monitor = 0
     follow = mouse
     geometry = "300x5-20+50"
     indicate_hidden = yes
     shrink = no
-    transparency = 80 
+    transparency = 30
     separator_height = 2
     padding = 12
     horizontal_padding = 12
     frame_width = 2 
-    frame_color = "#141414"
+    frame_color = "#2E3440"
     separator_color = frame
     sort = yes
     idle_threshold = 120
 
     # Text
-
-    font = Monospace 9
+    font = Mononoki Nerd 9
     line_height = 4
     markup = full
     show_age_threshold = 60
@@ -30,19 +28,15 @@
     show_indicators = yes
 
     # Icons
-
     icon_position = left
     max_icon_size = 32
-
     icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
 
     # History
-
     sticky_history = yes
     history_length = 20
 
     # Advanced 
-
     dmenu = /usr/bin/dmenu -p dunst:
     browser = /usr/bin/firefox -new-tab
     always_run_script = true
@@ -53,38 +47,28 @@
     corner_radius = 0
 
     # Legacy
-
     force_xinerama = false
 
     # Mouse
-
     mouse_left_click = close_current
     mouse_middle_click = do_action
     mouse_right_click = close_all
 
 [experimental]
-
     per_monitor_dpi = false
 
-[shortcuts]
-
-    close = ctrl+enter
-    close_all = ctrl+shift+enter
-    history = ctrl+grave
-    context = ctrl+shift+period
-
 [urgency_low]
-    background = "#282828"
-    foreground = "#ebdbb2"
+    background = "#3B4252"
+    foreground = "#D8DEE9"
     timeout = 5
 
 [urgency_normal]
-    background = "#282828"
-    foreground = "#ebdbb2"
+    background = "#3B4252"
+    foreground = "#D8DEE9"
     timeout = 5
 
 [urgency_critical]
-    background = "#282828"
-    foreground = "#ebdbb2"
-    frame_color = "#cc241d"
+    background = "#3B4252"
+    foreground = "#D8DEE9"
+    frame_color = "#BF616A"
     timeout = 0

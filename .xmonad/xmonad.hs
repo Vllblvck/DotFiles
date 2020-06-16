@@ -3,9 +3,12 @@
 ------------------------------------------------------------------------
 
 import XMonad hiding ( (|||) )
+
 import XMonad.Util.EZConfig
 import XMonad.Util.SpawnOnce
-import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Run
+import XMonad.Util.NamedScratchpad
+
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
@@ -15,12 +18,16 @@ import XMonad.Layout.MultiColumns
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Grid
 import XMonad.Layout.LayoutCombinators
+
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.SetWMName
+
 import XMonad.Actions.WithAll
 
 import Data.Monoid
 import System.Exit
-
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M 
 
@@ -28,11 +35,18 @@ import qualified Data.Map        as M
 -- Settings
 ------------------------------------------------------------------------
 
+myNormalBorderColor  = "#2E3440"
+myFocusedBorderColor = "#81A1C1"
+currentWorkspaceColor = "#81A1C1"
+hiddenWorkspaceColor = "#D8DEE9"
+visibleWorkspaceColor = "#4C566A"
+urgentWorkspaceColor = "#BF616A"
+windowTitleColor = "#D8DEE9" 
+layoutNameColor = "#D8DEE9"
+stdinSeparatorColor = "#A3BE8C"
+
 myModKey = mod4Mask
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myBorderWidth = 2
-myNormalBorderColor  = "#282828"
-myFocusedBorderColor = "#458588"
 myTerminal = "alacritty"
 mAppLauncher = "rofi -show drun -theme ~/.config/rofi/launcher.rasi"
 myWebBrowser = "qutebrowser"
@@ -42,6 +56,7 @@ myWebBrowser = "qutebrowser"
 ------------------------------------------------------------------------
 
 myStartupHook = do
+    setWMName "LG3D" -- This exists so java apps display properly
     spawnOnce "picom --experimental-backends --backend glx &"
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
@@ -53,76 +68,61 @@ myStartupHook = do
 
 myKeys = 
 
-    -- Launching apps
-    [ ("M-<Return>", spawn myTerminal)
-    , ("M-d", spawn mAppLauncher)
-    , ("M-w", spawn myWebBrowser)
-    , ("M-u", spawn (myTerminal ++ " -e mocp"))
-    , ("M-n", spawn (myTerminal ++ " -e pacmixer"))
-    , ("M-s", spawn (myTerminal ++ " -e ranger"))
-    , ("M-S-s", spawn "flameshot gui")
+    -- Xmonad
+    [ ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
+    , ("M-x c", io (exitWith ExitSuccess)) 
+    , ("M-x s", spawn "systemctl poweroff")
+    , ("M-x r", spawn "systemctl reboot")
+    , ("M-x l", spawn "betterlockscreen -l blur")
 
     -- Windows
     , ("M-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)
+    , ("M-v", sendMessage $ Toggle MIRROR)
     , ("M-S-q", kill)
     , ("M-S-a", killAll)
+    , ("M-h", sendMessage Shrink)
+    , ("M-l", sendMessage Expand)
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
     , ("M-m", windows W.focusMaster)
     , ("M-S-j", windows W.swapDown)
     , ("M-S-k", windows W.swapUp)
     , ("M-S-m", windows W.swapMaster)
-    , ("M-S-h", sendMessage Shrink)
-    , ("M-S-l", sendMessage Expand)
     , ("M-t", withFocused $ windows . W.sink)
     , ("M-,", sendMessage (IncMasterN (1)))
     , ("M-.", sendMessage (IncMasterN (-1)))
-    , ("M-S-n", refresh) -- resize windows to correct size 
-
-    -- Xmonad
-    , ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-    , ("M-x c", io (exitWith ExitSuccess)) 
-    , ("M-x s", spawn "systemctl poweroff")
-    , ("M-x r", spawn "systemctl reboot")
-    , ("M-x l", spawn "betterlockscreen -l blur")
 
     -- Layouts 
     , ("M-<Tab>", sendMessage NextLayout)
     , ("M-S-<Tab>", sendMessage $ JumpToLayout "Tall")
-    ]
+
+    -- Scratchpads
+    , ("M-u", namedScratchpadAction myScratchpads "mocp")
+
+    -- Launching apps
+    , ("M-<Return>", spawn myTerminal)
+    , ("M-d", spawn mAppLauncher)
+    , ("M-w", spawn myWebBrowser)
+    , ("M-n", spawn (myTerminal ++ " -e pacmixer"))
+    , ("M-s", spawn (myTerminal ++ " -e ranger"))
+    , ("M-S-s", spawn "flameshot gui")
+    , ("M-S-u", spawn (myTerminal ++ " -t music -e mocp")) ]
 
 ------------------------------------------------------------------------
--- Mouse bindings
+-- Scratchpads
 ------------------------------------------------------------------------
 
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
-myClickJustFocuses :: Bool
-myClickJustFocuses = False
-
-mMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-
-    -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
-
-    -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
-
-    -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
-    ]
+myScratchpads = [ NS "mocp" (myTerminal ++ " -t mocp -e mocp") (title =? "mocp") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)) ]
 
 ------------------------------------------------------------------------
--- Layout:
+-- Layouts
 ------------------------------------------------------------------------
 
-myLayout = smartBorders
+myLayout =
+    smartBorders
     . avoidStruts
     . mkToggle (NOBORDERS ?? FULL ?? EOT)
+    . mkToggle (single MIRROR)
     . spacingRaw False (Border 10 10 10 10) True (Border 5 5 5 5) True 
     $ (tall ||| mirror ||| spiral (6/7) ||| mCol ||| threeCol ||| Grid)
         where  tall = Tall 1 (3/100) (1/2)
@@ -135,7 +135,37 @@ myLayout = smartBorders
 ------------------------------------------------------------------------
 
 myManageHook = composeAll
-    [ resource  =? "desktop_window" --> doIgnore ]
+    [ namedScratchpadManageHook myScratchpads
+    , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 0)
+    , className =? "LBRY"            --> doShift ( myWorkspaces !! 0)
+    , className =? "firefox"         --> doShift ( myWorkspaces !! 0)
+    , className =? "Brave-browser"   --> doShift ( myWorkspaces !! 0)
+    , className =? "code-oss"        --> doShift ( myWorkspaces !! 2)
+    , className =? "jetbrains-rider" --> doShift ( myWorkspaces !! 2)
+    , title     =? "music"           --> doShift ( myWorkspaces !! 3)
+    , className =? "Caprine"         --> doShift ( myWorkspaces !! 4)
+    , className =? "discord"         --> doShift ( myWorkspaces !! 4)
+    , className =? "Thunderbird"     --> doShift ( myWorkspaces !! 5)
+    , className =? "qBittorrent"     --> doShift ( myWorkspaces !! 6)
+    , className =? "Virt-manager"    --> doShift ( myWorkspaces !! 7)
+    , resource  =? "desktop_window"  --> doIgnore
+    , insertPosition End Newer ]
+
+------------------------------------------------------------------------
+-- Workspaces
+------------------------------------------------------------------------
+
+xmobarEscape = concatMap doubleLts
+  where
+        doubleLts '<' = "<<"
+        doubleLts x   = [x]
+        
+myWorkspaces = clickable . (map xmobarEscape) 
+               $ ["WEB","MISC","DEV","MUS","CHAT","MAIL","TRNT","VIRT"]
+  where                                                                      
+        clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+                      (i,ws) <- zip [1..8] l,
+                      let n = i ] 
 
 ------------------------------------------------------------------------
 -- Main
@@ -143,42 +173,29 @@ myManageHook = composeAll
 
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ docks def {
-
+    xmonad $ docks def 
+        {
         terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        clickJustFocuses   = myClickJustFocuses,
-        borderWidth        = myBorderWidth,
         modMask            = myModKey,
         workspaces         = myWorkspaces,
+        borderWidth        = myBorderWidth,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
-        mouseBindings      = mMouseBindings,
         layoutHook         = myLayout,
+        startupHook        = myStartupHook,
         manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
-        logHook            = myLogHook,
-        startupHook        = myStartupHook 
-
+        logHook            = dynamicLogWithPP xmobarPP
+		  		 { ppOutput = hPutStrLn xmproc
+		  		 , ppCurrent = xmobarColor currentWorkspaceColor "" . wrap "[" "]"
+		  		 , ppVisible = xmobarColor visibleWorkspaceColor ""
+				 , ppHidden = xmobarColor hiddenWorkspaceColor ""
+				 , ppHiddenNoWindows = xmobarColor visibleWorkspaceColor ""
+				 , ppLayout = xmobarColor layoutNameColor ""
+				 , ppTitle = xmobarColor windowTitleColor "" . shorten 40
+				 , ppSep = "<fc=" ++ stdinSeparatorColor ++ "> || </fc>"
+				 , ppUrgent = xmobarColor urgentWorkspaceColor "" 
+		  		 },
+        handleEventHook    = mempty,
+        focusFollowsMouse  = True,
+        clickJustFocuses   = False
 	} `additionalKeysP` myKeys
-
-------------------------------------------------------------------------
--- Event handling
-------------------------------------------------------------------------
-
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
-myEventHook = mempty
-
-------------------------------------------------------------------------
--- Status bars and logging
-------------------------------------------------------------------------
-
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'XMonad.Hooks.DynamicLog' extension for examples.
---
-myLogHook = return ()

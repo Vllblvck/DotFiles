@@ -1,0 +1,4 @@
+SoundDriver = PULSEAUDIO:JACK:ALSA:OSS
+Theme = Deephouse_theme 
+Keymap = keymap
+Layout1 = directory(0,0,100%,100%)

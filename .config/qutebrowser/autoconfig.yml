@@ -6,5 +6,5 @@
 
 config_version: 2
 settings:
-  content.register_protocol_handler:
-    https://poczta.stud.uz.zgora.pl?view=compose&to=%25s: false
+  content.notifications:
+    https://www.reddit.com: false

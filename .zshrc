@@ -21,21 +21,24 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
-alias xconf="nvim ~/.xmonad/xmonad.hs"
-alias xbarconf="nvim ~/.xmobarrc"
 alias ex="extract"
 alias r="ranger"
 alias v="nvim"
+alias ..="cd .."
+alias bt="bashtop"
+alias yt="sh ~/Scripts/ytmusic.sh"
+alias countdown="sh ~/Scripts/countdown.sh"
+alias weather="sh ~/Scripts/weather.sh"
+alias regex="cat ~/Documents/regex_notes.txt"
+alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
+alias xmonconf="nvim ~/.xmonad/xmonad.hs"
+alias xbarconf="nvim ~/.xmobarrc"
 alias lsa="ls -A"
 alias lsl="ls -l"
 alias lsal="ls -Al"
-alias ..="cd .."
-alias bt="bashtop"
-alias yt="sh ~/Projects/Scripts/ytmusic.sh"
-alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
 
 # Vi mode
-bindkey -v
+# bindkey -v
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
