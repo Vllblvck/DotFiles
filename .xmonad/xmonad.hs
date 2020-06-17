@@ -24,6 +24,9 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.SetWMName
 
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+
 import XMonad.Actions.WithAll
 
 import Data.Monoid
@@ -48,7 +51,6 @@ stdinSeparatorColor = "#A3BE8C"
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
-mAppLauncher = "rofi -show drun -theme ~/.config/rofi/launcher.rasi"
 myWebBrowser = "qutebrowser"
 
 ------------------------------------------------------------------------
@@ -60,7 +62,7 @@ myStartupHook = do
     spawnOnce "picom --experimental-backends --backend glx &"
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
-    spawnOnce "betterlockscreen -u ~/usr/share/backgrounds/gruvbox.jpg &"
+    spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_with_galaxy.jpg &"
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -73,11 +75,9 @@ myKeys =
     , ("M-x c", io (exitWith ExitSuccess)) 
     , ("M-x s", spawn "systemctl poweroff")
     , ("M-x r", spawn "systemctl reboot")
-    , ("M-x l", spawn "betterlockscreen -l blur")
+    , ("M-x l", spawn "betterlockscreen -l")
 
     -- Windows
-    , ("M-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)
-    , ("M-v", sendMessage $ Toggle MIRROR)
     , ("M-S-q", kill)
     , ("M-S-a", killAll)
     , ("M-h", sendMessage Shrink)
@@ -95,13 +95,16 @@ myKeys =
     -- Layouts 
     , ("M-<Tab>", sendMessage NextLayout)
     , ("M-S-<Tab>", sendMessage $ JumpToLayout "Tall")
+    , ("M-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)
+    , ("M-v", sendMessage $ Toggle MIRROR)
 
     -- Scratchpads
     , ("M-u", namedScratchpadAction myScratchpads "mocp")
+    , ("M-S-<Return>", namedScratchpadAction myScratchpads "terminal")
 
     -- Launching apps
     , ("M-<Return>", spawn myTerminal)
-    , ("M-d", spawn mAppLauncher)
+    , ("M-d", shellPrompt shellXPConfig)
     , ("M-w", spawn myWebBrowser)
     , ("M-n", spawn (myTerminal ++ " -e pacmixer"))
     , ("M-s", spawn (myTerminal ++ " -e ranger"))
@@ -112,7 +115,9 @@ myKeys =
 -- Scratchpads
 ------------------------------------------------------------------------
 
-myScratchpads = [ NS "mocp" (myTerminal ++ " -t mocp -e mocp") (title =? "mocp") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)) ]
+myScratchpads = [ NS "mocp" (myTerminal ++ " -t mocp -e mocp") (title =? "mocp") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+                , NS "terminal" (myTerminal ++ " -t terminal") (title =? "terminal") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)) 
+		]
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -124,10 +129,9 @@ myLayout =
     . mkToggle (NOBORDERS ?? FULL ?? EOT)
     . mkToggle (single MIRROR)
     . spacingRaw False (Border 10 10 10 10) True (Border 5 5 5 5) True 
-    $ (tall ||| mirror ||| spiral (6/7) ||| mCol ||| threeCol ||| Grid)
+    $ (tall ||| spiral (6/7) ||| mCol ||| threeCol ||| Grid)
         where  tall = Tall 1 (3/100) (1/2)
 	       mCol = multiCol [1] 1 0.01 (-0.5)
-	       mirror = Mirror (Tall 1 (3/100) (3/5))
 	       threeCol = ThreeCol 1 (3/100) (1/2)
 
 ------------------------------------------------------------------------
@@ -152,6 +156,25 @@ myManageHook = composeAll
     , insertPosition End Newer ]
 
 ------------------------------------------------------------------------
+-- Xprompt
+------------------------------------------------------------------------
+
+shellXPConfig :: XPConfig
+shellXPConfig = def
+      { font                = "xft:Mononoki Nerd Font:size=13"
+      , bgColor             = "#2E3440"
+      , fgColor             = "#D8DEE9"
+      , bgHLight            = "#81A1C1"
+      , fgHLight            = "#D8DEE9"
+      , promptBorderWidth   = 0
+      , position            = Top
+      , defaultText         = []
+      , showCompletionOnTab = False
+      , alwaysHighlight     = True
+      , maxComplRows        = Just 5
+      }
+
+------------------------------------------------------------------------
 -- Workspaces
 ------------------------------------------------------------------------
 
@@ -162,7 +185,7 @@ xmobarEscape = concatMap doubleLts
         
 myWorkspaces = clickable . (map xmobarEscape) 
                $ ["WEB","MISC","DEV","MUS","CHAT","MAIL","TRNT","VIRT"]
-  where                                                                      
+  where
         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                       (i,ws) <- zip [1..8] l,
                       let n = i ] 
