@@ -47,7 +47,6 @@ urgentWorkspaceColor = "#BF616A"
 windowTitleColor = "#D8DEE9" 
 layoutNameColor = "#D8DEE9"
 stdinSeparatorColor = "#A3BE8C"
-
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
@@ -59,7 +58,7 @@ myWebBrowser = "qutebrowser"
 
 myStartupHook = do
     setWMName "LG3D" -- This exists so java apps display properly
-    spawnOnce "picom --experimental-backends --backend glx &"
+    spawnOnce "picom &"
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
     spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_with_galaxy.jpg &"
@@ -161,7 +160,7 @@ myManageHook = composeAll
 
 shellXPConfig :: XPConfig
 shellXPConfig = def
-      { font                = "xft:Mononoki Nerd Font:size=13"
+      { font                = "xft:Mononoki Nerd Font:size=12"
       , bgColor             = "#2E3440"
       , fgColor             = "#D8DEE9"
       , bgHLight            = "#81A1C1"

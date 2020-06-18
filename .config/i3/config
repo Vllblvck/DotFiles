@@ -178,9 +178,9 @@ bindsym $mod+w exec qutebrowser
 bindsym $mod+Shift+s exec flameshot gui
 
 # Autostart apps
-exec_always --no-startup-id sh ~/.config/polybar/launch.sh
+exec_always --no-startup-id sh ~/.config/launch_polybar/launch.sh
 exec_always --no-startup-id picom --experimental-backends --backend glx
 exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 
 exec --no-startup-id flameshot
-exec --no-startup-id betterlockscreen -u ~/.config/wallpaper.jpg 
+exec --no-startup-id betterlockscreen -u /usr/share/backgrounds/mountains_with_galaxy.jpg
