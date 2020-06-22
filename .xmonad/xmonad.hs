@@ -18,6 +18,7 @@ import XMonad.Layout.MultiColumns
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Grid
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.Renamed
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
@@ -26,6 +27,7 @@ import XMonad.Hooks.SetWMName
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Prompt.XMonad
 
 import XMonad.Actions.WithAll
 
@@ -50,7 +52,7 @@ stdinSeparatorColor = "#A3BE8C"
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
-myWebBrowser = "qutebrowser"
+myWebBrowser = "firefox"
 
 ------------------------------------------------------------------------
 -- Startup
@@ -71,10 +73,12 @@ myKeys =
 
     -- Xmonad
     [ ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
+    --, ("M-x ", spawn "dunstify -a \"powermenu\" -u low -r \"991048\" \"Powermenu mode\"")
     , ("M-x c", io (exitWith ExitSuccess)) 
     , ("M-x s", spawn "systemctl poweroff")
     , ("M-x r", spawn "systemctl reboot")
     , ("M-x l", spawn "betterlockscreen -l")
+    , ("M-d", shellPrompt shellXPConfig)
 
     -- Windows
     , ("M-S-q", kill)
@@ -101,9 +105,13 @@ myKeys =
     , ("M-u", namedScratchpadAction myScratchpads "mocp")
     , ("M-S-<Return>", namedScratchpadAction myScratchpads "terminal")
 
+    -- Volume
+    , ("M-=", spawn "/home/vllblvck/Scripts/pulse_volume.sh increase")
+    , ("M--", spawn "/home/vllblvck/Scripts/pulse_volume.sh decrease")
+    , ("M-0", spawn "/home/vllblvck/Scripts/pulse_volume.sh mute")
+
     -- Launching apps
     , ("M-<Return>", spawn myTerminal)
-    , ("M-d", shellPrompt shellXPConfig)
     , ("M-w", spawn myWebBrowser)
     , ("M-n", spawn (myTerminal ++ " -e pacmixer"))
     , ("M-s", spawn (myTerminal ++ " -e ranger"))
@@ -124,12 +132,13 @@ myScratchpads = [ NS "mocp" (myTerminal ++ " -t mocp -e mocp") (title =? "mocp")
 
 myLayout =
     smartBorders
-    . avoidStruts
-    . mkToggle (NOBORDERS ?? FULL ?? EOT)
-    . mkToggle (single MIRROR)
-    . spacingRaw False (Border 10 10 10 10) True (Border 5 5 5 5) True 
-    $ (tall ||| spiral (6/7) ||| mCol ||| threeCol ||| Grid)
-        where  tall = Tall 1 (3/100) (1/2)
+    $ avoidStruts
+    $ mkToggle (NOBORDERS ?? FULL ?? EOT)
+    $ mkToggle (single MIRROR)
+    $ renamed [CutWordsLeft 1, Prepend "Layout: "]
+    $ spacingRaw False (Border 10 10 10 10) True (Border 5 5 5 5) True 
+    $ (tall ||| spiral (6/7) ||| mCol ||| Grid ||| threeCol )
+         where tall = Tall 1 (3/100) (1/2)
 	       mCol = multiCol [1] 1 0.01 (-0.5)
 	       threeCol = ThreeCol 1 (3/100) (1/2)
 
@@ -167,7 +176,6 @@ shellXPConfig = def
       , fgHLight            = "#D8DEE9"
       , promptBorderWidth   = 0
       , position            = Top
-      , defaultText         = []
       , showCompletionOnTab = False
       , alwaysHighlight     = True
       , maxComplRows        = Just 5
@@ -206,7 +214,7 @@ main = do
         layoutHook         = myLayout,
         startupHook        = myStartupHook,
         manageHook         = myManageHook,
-        logHook            = dynamicLogWithPP xmobarPP
+        logHook            = dynamicLogWithPP $ def
 		  		 { ppOutput = hPutStrLn xmproc
 		  		 , ppCurrent = xmobarColor currentWorkspaceColor "" . wrap "[" "]"
 		  		 , ppVisible = xmobarColor visibleWorkspaceColor ""
@@ -216,6 +224,7 @@ main = do
 				 , ppTitle = xmobarColor windowTitleColor "" . shorten 40
 				 , ppSep = "<fc=" ++ stdinSeparatorColor ++ "> || </fc>"
 				 , ppUrgent = xmobarColor urgentWorkspaceColor "" 
+				 , ppOrder = \(ws:l:_:_) -> [ws,l]
 		  		 },
         handleEventHook    = mempty,
         focusFollowsMouse  = True,

@@ -5,10 +5,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Paths
+# Enviroment variables
 export ZSH="/home/vllblvck/.oh-my-zsh"
 export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
-export EDITOR="usr/bin/nvim"
+export VISUAL="/usr/bin/nvim"
+export EDITOR="/usr/bin/nvim"
 export TERM="alacritty"
 
 # Plugins
@@ -26,9 +27,10 @@ alias r="ranger"
 alias v="nvim"
 alias ..="cd .."
 alias bt="bashtop"
-alias yt="sh ~/Scripts/ytmusic.sh"
-alias countdown="sh ~/Scripts/countdown.sh"
-alias weather="sh ~/Scripts/weather.sh"
+alias ssh-start"~/Scripts/ssh_start.sh"
+alias yt="~/Scripts/ytmusic.sh"
+alias countdown="~/Scripts/countdown.sh"
+alias weather="~/Scripts/weather.sh"
 alias regex="cat ~/Documents/regex_notes.txt"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
 alias xmonconf="nvim ~/.xmonad/xmonad.hs"
