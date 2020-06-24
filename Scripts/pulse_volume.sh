@@ -1,5 +1,4 @@
 ACTION=$1
-DEVICE=1
 msgId="991049"
 
 if [ $ACTION == increase ]; then
