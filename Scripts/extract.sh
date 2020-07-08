@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $1 -eq 0 ]]; then
+if [[ $# -eq 0 ]]; then
     echo "No file specified"
     exit 0
 fi
