@@ -19,6 +19,7 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Grid
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
@@ -44,10 +45,10 @@ myNormalBorderColor  = "#2E3440"
 myFocusedBorderColor = "#81A1C1"
 currentWorkspaceColor = "#81A1C1"
 hiddenWorkspaceColor = "#D8DEE9"
-visibleWorkspaceColor = "#4C566A"
+visibleWorkspaceColor = "#5B687F"
 urgentWorkspaceColor = "#BF616A"
 windowTitleColor = "#D8DEE9" 
-layoutNameColor = "#D8DEE9"
+layoutNameColor = "#81A1C1"
 stdinSeparatorColor = "#A3BE8C"
 myModKey = mod4Mask
 myBorderWidth = 2
@@ -63,7 +64,7 @@ myStartupHook = do
     spawnOnce "picom &"
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
-    spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_with_galaxy.jpg &"
+    spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_purple.jpg &"
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -73,7 +74,6 @@ myKeys =
 
     -- Xmonad
     [ ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-    --, ("M-x ", spawn "dunstify -a \"powermenu\" -u low -r \"991048\" \"Powermenu mode\"")
     , ("M-x c", io (exitWith ExitSuccess)) 
     , ("M-x s", spawn "systemctl poweroff")
     , ("M-x r", spawn "systemctl reboot")
@@ -84,7 +84,9 @@ myKeys =
     , ("M-S-q", kill)
     , ("M-S-a", killAll)
     , ("M-h", sendMessage Shrink)
+    , ("M-S-h", sendMessage MirrorShrink)
     , ("M-l", sendMessage Expand)
+    , ("M-S-l", sendMessage MirrorExpand)
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
     , ("M-m", windows W.focusMaster)
@@ -97,13 +99,15 @@ myKeys =
 
     -- Layouts 
     , ("M-<Tab>", sendMessage NextLayout)
-    , ("M-S-<Tab>", sendMessage $ JumpToLayout "Tall")
+    , ("M-S-<Tab>", sendMessage $ JumpToLayout "ResizableTall")
     , ("M-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)
     , ("M-v", sendMessage $ Toggle MIRROR)
+    , ("M-s", refresh)
 
     -- Scratchpads
     , ("M-u", namedScratchpadAction myScratchpads "mocp")
     , ("M-S-<Return>", namedScratchpadAction myScratchpads "terminal")
+    , ("M-c", namedScratchpadAction myScratchpads "calendar")
 
     -- Volume
     , ("M-=", spawn "/home/vllblvck/Scripts/pulse_volume.sh increase")
@@ -113,18 +117,17 @@ myKeys =
     -- Launching apps
     , ("M-<Return>", spawn myTerminal)
     , ("M-w", spawn myWebBrowser)
-    , ("M-n", spawn (myTerminal ++ " -e pacmixer"))
-    , ("M-s", spawn (myTerminal ++ " -e ranger"))
+    , ("M-y", spawn (myTerminal ++ " -e pacmixer"))
+    , ("M-r", spawn (myTerminal ++ " -e ranger"))
     , ("M-S-s", spawn "flameshot gui")
-    , ("M-S-u", spawn (myTerminal ++ " -t music -e mocp")) ]
-
+    , ("M-n", spawn (myTerminal ++ " -t nvim-dev -e nvim")) ]
 ------------------------------------------------------------------------
 -- Scratchpads
 ------------------------------------------------------------------------
 
 myScratchpads = [ NS "mocp" (myTerminal ++ " -t mocp -e mocp") (title =? "mocp") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
                 , NS "terminal" (myTerminal ++ " -t terminal") (title =? "terminal") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)) 
-		]
+                , NS "calendar" (myTerminal ++ " -t calendar -e calcurse") (title =? "calendar") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)) ] 
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -135,10 +138,10 @@ myLayout =
     $ avoidStruts
     $ mkToggle (NOBORDERS ?? FULL ?? EOT)
     $ mkToggle (single MIRROR)
-    $ renamed [CutWordsLeft 1, Prepend "Layout: "]
+    $ renamed [CutWordsLeft 1]
     $ spacingRaw False (Border 10 10 10 10) True (Border 5 5 5 5) True 
-    $ (tall ||| spiral (6/7) ||| mCol ||| Grid ||| threeCol )
-         where tall = Tall 1 (3/100) (1/2)
+    $ (tall ||| Grid ||| mCol ||| spiral (6/7) ||| threeCol)
+         where tall = ResizableTall 1 (3/100) (1/2) []
 	       mCol = multiCol [1] 1 0.01 (-0.5)
 	       threeCol = ThreeCol 1 (3/100) (1/2)
 
@@ -152,14 +155,15 @@ myManageHook = composeAll
     , className =? "LBRY"            --> doShift ( myWorkspaces !! 0)
     , className =? "firefox"         --> doShift ( myWorkspaces !! 0)
     , className =? "Brave-browser"   --> doShift ( myWorkspaces !! 0)
+    , title     =? "nvim-dev"        --> doShift ( myWorkspaces !! 2)
     , className =? "code-oss"        --> doShift ( myWorkspaces !! 2)
     , className =? "jetbrains-rider" --> doShift ( myWorkspaces !! 2)
-    , title     =? "music"           --> doShift ( myWorkspaces !! 3)
-    , className =? "Caprine"         --> doShift ( myWorkspaces !! 4)
-    , className =? "discord"         --> doShift ( myWorkspaces !! 4)
-    , className =? "Thunderbird"     --> doShift ( myWorkspaces !! 5)
-    , className =? "qBittorrent"     --> doShift ( myWorkspaces !! 6)
-    , className =? "Virt-manager"    --> doShift ( myWorkspaces !! 7)
+    , className =? "Caprine"         --> doShift ( myWorkspaces !! 3)
+    , className =? "discord"         --> doShift ( myWorkspaces !! 3)
+    , className =? "Steam"           --> doShift ( myWorkspaces !! 4)
+    , className =? "Thunderbird"     --> doShift ( myWorkspaces !! 6)
+    , className =? "qBittorrent"     --> doShift ( myWorkspaces !! 7)
+    , className =? "Virt-manager"    --> doShift ( myWorkspaces !! 8)
     , resource  =? "desktop_window"  --> doIgnore
     , insertPosition End Newer ]
 
@@ -176,9 +180,10 @@ shellXPConfig = def
       , fgHLight            = "#D8DEE9"
       , promptBorderWidth   = 0
       , position            = Top
+      , height              = 20
       , showCompletionOnTab = False
       , alwaysHighlight     = True
-      , maxComplRows        = Just 5
+      , maxComplRows        = Just 2 
       }
 
 ------------------------------------------------------------------------
@@ -191,10 +196,10 @@ xmobarEscape = concatMap doubleLts
         doubleLts x   = [x]
         
 myWorkspaces = clickable . (map xmobarEscape) 
-               $ ["WEB","MISC","DEV","MUS","CHAT","MAIL","TRNT","VIRT"]
+               $ ["WEB","TERM","DEV","CHAT","MISC","MUSIC","MAIL","TRNT","VIRT"]
   where
         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                      (i,ws) <- zip [1..8] l,
+                      (i,ws) <- zip [1..9] l,
                       let n = i ] 
 
 ------------------------------------------------------------------------
@@ -202,7 +207,7 @@ myWorkspaces = clickable . (map xmobarEscape)
 ------------------------------------------------------------------------
 
 main = do
-    xmproc <- spawnPipe "xmobar"
+    xmproc <- spawnPipe "xmobar /home/vllblvck/.config/xmobar/xmobarrc"
     xmonad $ docks def 
         {
         terminal           = myTerminal,
@@ -221,7 +226,6 @@ main = do
 				 , ppHidden = xmobarColor hiddenWorkspaceColor ""
 				 , ppHiddenNoWindows = xmobarColor visibleWorkspaceColor ""
 				 , ppLayout = xmobarColor layoutNameColor ""
-				 , ppTitle = xmobarColor windowTitleColor "" . shorten 40
 				 , ppSep = "<fc=" ++ stdinSeparatorColor ++ "> || </fc>"
 				 , ppUrgent = xmobarColor urgentWorkspaceColor "" 
 				 , ppOrder = \(ws:l:_:_) -> [ws,l]

@@ -1,0 +1,12 @@
+cheatpaths:
+
+  - name: community
+    path: /usr/share/cheat/cheatsheets/community/
+    tags: [ community ]
+    readonly: true
+  
+  - name: personal
+    path: /home/vllblvck/.config/cheat/cheatsheets/
+    tags: [ personal ]
+    readonly: false
+

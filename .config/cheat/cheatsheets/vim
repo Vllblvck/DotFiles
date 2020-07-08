@@ -1,0 +1,15 @@
+Vertical navigation:
+gg - to the top of file
+G - to the bottom of file :100 - go to line number 100
+12j - move 12 line down
+12k - move 12 lines up
+{} - junping verticaly between empty lines
+% - jump to the pair
+i - inside something (di, ci, vi)
+
+File movements:
+:e {pathToFile} - open file
+Ctrl+^ - switch between 2 lastly opened files
+Ctrl+i, Ctrl+o - jump forward and backwards in history
+Ctrl+w, Ctrl+n - split verticaly and horizontaly
+Ctrl+w o - close everything but current buffer

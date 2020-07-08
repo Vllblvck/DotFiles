@@ -22,22 +22,23 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
+alias yas="yay -Syu"
+alias yar="yay -Rsn"
+alias yaq="yay -Qi"
 alias ex="extract"
 alias r="ranger"
 alias v="nvim"
 alias ..="cd .."
-alias bt="bashtop"
-alias ssh-start"~/Scripts/ssh_start.sh"
 alias yt="~/Scripts/ytmusic.sh"
-alias countdown="~/Scripts/countdown.sh"
-alias weather="~/Scripts/weather.sh"
-alias regex="cat ~/Documents/regex_notes.txt"
+alias weather="curl wttr.in"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
+alias dotfiles-push="./Scripts/dotfiles-push"
 alias xmonconf="nvim ~/.xmonad/xmonad.hs"
-alias xbarconf="nvim ~/.xmobarrc"
-alias lsa="ls -A"
-alias lsl="ls -l"
-alias lsal="ls -Al"
+alias xbarconf="nvim ~/.config/xmobar/xmobarrc"
+alias l="ls"
+alias la="ls -A"
+alias ll="ls -l"
+alias lal="ls -Al"
 
 # Vi mode
 # bindkey -v
