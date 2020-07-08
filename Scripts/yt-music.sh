@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 url="https://www.youtube.com/playlist?list=PLZGNjNozIky0F5FyR_aVK4uChqYZr3oQD"
-directory="~/Music/%(title)s.%(ext)s"
+directory="$HOME/Music/%(title)s.%(ext)s"
 format="wav"
 quality=0
 

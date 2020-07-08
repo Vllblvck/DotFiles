@@ -110,9 +110,9 @@ myKeys =
     , ("M-c", namedScratchpadAction myScratchpads "calendar")
 
     -- Volume
-    , ("M-=", spawn "/home/vllblvck/Scripts/pulse_volume.sh increase")
-    , ("M--", spawn "/home/vllblvck/Scripts/pulse_volume.sh decrease")
-    , ("M-0", spawn "/home/vllblvck/Scripts/pulse_volume.sh mute")
+    , ("M-=", spawn "/home/vllblvck/Scripts/pulse-volume.sh increase")
+    , ("M--", spawn "/home/vllblvck/Scripts/pulse-volume.sh decrease")
+    , ("M-0", spawn "/home/vllblvck/Scripts/pulse-volume.sh mute")
 
     -- Launching apps
     , ("M-<Return>", spawn myTerminal)

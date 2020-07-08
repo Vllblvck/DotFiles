@@ -14,8 +14,8 @@ Config { font = "xft:Mononoki Nerd Font:pixelsize=13"
        , commands = [ Run Cpu ["-t", "<fc=#BF616A> Cpu: <total>%</fc>"] 10
                     , Run Memory ["-t", "<fc=#D08770>  Mem: <used>/<total>M</fc>"] 10
 		    , Run Date "  %a %d %b %Y    %H:%M:%S" "date" 10
-		    , Run Com "/home/vllblvck/Scripts/arch_updates.sh" [] "arch_updates" 9000
-		    , Run Com "/home/vllblvck/Scripts/aur_updates.sh" [] "aur_updates" 9000
+		    , Run Com "/home/vllblvck/Scripts/arch-updates.sh" [] "arch_updates" 9000
+		    , Run Com "/home/vllblvck/Scripts/aur-updates.sh" [] "aur_updates" 9000
                     , Run UnsafeStdinReader ]
        , sepChar = "%"
        , alignSep = "}{"

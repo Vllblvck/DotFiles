@@ -1,6 +1,6 @@
-"--------------------------------------"
-" Plugins
-"--------------------------------------"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PLUGINS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.local/share/nvim/site/autoload/')
 
@@ -25,14 +25,12 @@ call plug#end()
 "Latex pdf preview
 let g:livepreview_previewer = 'zathura' "LLPStartPreview
 
-"Launching Nerd tree
-nnoremap <C-T> :NERDTreeToggle<CR>
 
-"--------------------------------------"
-" Vim stuff
-"--------------------------------------"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" KEYBINDS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Moving between splits
+"Moving between splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -41,14 +39,14 @@ nnoremap <C-H> <C-W><C-H>
 "Fuzzy finder
 nnoremap <C-p> :FuzzyOpen<CR>
 
-" Colorscheme
-colorscheme nord
-autocmd BufEnter *.py colorscheme gruvbox
-autocmd BufEnter *.hs colorscheme gruvbox
-autocmd BufEnter *.tex colorscheme gruvbox
-autocmd BufEnter *.html colorscheme gruvbox
+"Nerd tree
+nnoremap <C-T> :NERDTreeToggle<CR>
 
-"Always yanking to clipboard
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GENERAL
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Always yank to clipboard
 set clipboard+=unnamedplus
 
 "Line numbers
@@ -62,9 +60,16 @@ set textwidth=79
 set expandtab
 set autoindent
 
-"--------------------------------------"
-" Things that supposedly make coc better
-"--------------------------------------"
+" Colorscheme
+colorscheme nord
+autocmd BufEnter *.py colorscheme gruvbox
+autocmd BufEnter *.hs colorscheme gruvbox
+autocmd BufEnter *.tex colorscheme gruvbox
+autocmd BufEnter *.html colorscheme gruvbox
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COC SETTINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " TextEdit might fail if hidden is not set.
 set hidden
