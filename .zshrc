@@ -1,32 +1,4 @@
 ##############################################################################
-# ZSH SETTINGS
-##############################################################################
-
-#Autocompletion
-autoload -Uz compinit
-compinit
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' rehash true
-
-#Prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
-#Key bindings
-bindkey -v
-typeset -g -A key
-
-key[Control-Left]="${terminfo[kLFT5]}"
-key[Control-Right]="${terminfo[kRIT5]}"
-
-[[ -n "${key[Control-Left]}"  ]] && bindkey -- "${key[Control-Left]}"  backward-word
-[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
-
-##############################################################################
 # ENVIROMENT VARIABLES
 ##############################################################################
 
@@ -45,12 +17,14 @@ alias yasu="yay -Syu"
 alias yar="yay -Rsn"
 alias yaq="yay -Qi"
 alias yac="yay -Yc"
-alias l="ls"
-alias la="ls -A"
-alias ll="ls -l"
-alias lal="ls -Al"
+alias l="ls --color"
+alias la="ls --color -A"
+alias ll="ls --color -l"
+alias lal="ls --color -Al"
 alias ..="cd .."
+alias ...="cd ../.."
 alias ~="cd ~"
+alias dir="dirs -v"
 
 # Programs
 alias v="nvim"
@@ -70,6 +44,64 @@ alias weather="curl wttr.in"
 alias xmonconf="nvim $HOME/.xmonad/xmonad.hs"
 alias xbarconf="nvim $HOME/.config/xmobar/xmobarrc"
 alias nvimconf="nvim $HOME/.config/nvim/init.vim"
+alias zshrc="nvim $HOME/.zshrc"
+alias alaconf="nvim $HOME/.config/alacritty/alacritty.yml"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+##############################################################################
+# ZSH SETTINGS
+##############################################################################
+
+#Autocompletion
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' rehash true
+
+#Prompt
+PROMPT=' %(?.%F{green}√.%F{red}X)%f%  %F{blue}%2~%f %F{magenta}%(!.#.$)%f '
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
+
+#Key bindings
+bindkey -v
+typeset -g -A key
+
+key[Control-Left]="${terminfo[kLFT5]}"
+key[Control-Right]="${terminfo[kRIT5]}"
+
+[[ -n "${key[Control-Left]}"  ]] && bindkey -- "${key[Control-Left]}"  backward-word
+[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
+
+#History 
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
+
+#Dirstack
+autoload -Uz add-zsh-hook
+
+DIRSTACKFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/dirs"
+if [[ -f "$DIRSTACKFILE" ]] && (( ${#dirstack} == 0 )); then
+	dirstack=("${(@f)"$(< "$DIRSTACKFILE")"}")
+	[[ -d "${dirstack[1]}" ]] && cd -- "${dirstack[1]}"
+fi
+chpwd_dirstack() {
+	print -l -- "$PWD" "${(u)dirstack[@]}" > "$DIRSTACKFILE"
+}
+add-zsh-hook -Uz chpwd chpwd_dirstack
+
+DIRSTACKSIZE='20'
+setopt AUTO_PUSHD PUSHD_SILENT PUSHD_TO_HOME
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_MINUS
+
+#Rehash
+trap 'rehash' USR1
