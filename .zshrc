@@ -15,7 +15,8 @@ export TERM="alacritty"
 alias yas="yay -S"
 alias yasu="yay -Syu"
 alias yar="yay -Rsn"
-alias yaq="yay -Qi"
+alias yaq="yay -Q"
+alias yaqi="yay -Qi"
 alias yac="yay -Yc"
 alias l="ls --color"
 alias la="ls --color -A"
@@ -33,7 +34,7 @@ alias r="ranger"
 # Scripts
 alias ex="$HOME/Scripts/extract.sh"
 alias yt="$HOME/Scripts/yt-music.sh"
-alias dotfiles-push="$HOME/Scripts/dotfiles-push.sh"
+alias dotfiles-add="$HOME/Scripts/dotfiles-add.sh"
 alias arch-updates="$HOME/Scripts/arch-updates.sh"
 alias aur-updates="$HOME/Scripts/aur-updates.sh"
 alias pulse-volume="$HOME/Scripts/pulse-volume.sh"
@@ -46,6 +47,7 @@ alias xbarconf="nvim $HOME/.config/xmobar/xmobarrc"
 alias nvimconf="nvim $HOME/.config/nvim/init.vim"
 alias zshrc="nvim $HOME/.zshrc"
 alias alaconf="nvim $HOME/.config/alacritty/alacritty.yml"
+alias pyemail="python -m smtpd -n -c DebuggingServer localhost:8025"
 
 ##############################################################################
 # ZSH SETTINGS
@@ -58,13 +60,21 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 zstyle ':completion:*' rehash true
 
 #Prompt
-PROMPT=' %(?.%F{green}√.%F{red}X)%f%  %F{blue}%2~%f %F{magenta}%(!.#.$)%f '
+VIMODE=''
+function zle-keymap-select {
+  VIMODE="${${KEYMAP/vicmd/(normal)}/(main|viins)/}"
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%r%f'
+PROMPT='%(?.%F{green}√.%F{red}X)%f%  %F{blue}%2~%f'\$vcs_info_msg_0_' %F{magenta}%(!.#.$)%f '
+RPROMPT='%F{green}${VIMODE}%f'
+
+zstyle ':vcs_info:git:*' formats '%F{yellow} (%b)%f'
 zstyle ':vcs_info:*' enable git
 
 #Key bindings
@@ -90,11 +100,11 @@ autoload -Uz add-zsh-hook
 
 DIRSTACKFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/dirs"
 if [[ -f "$DIRSTACKFILE" ]] && (( ${#dirstack} == 0 )); then
-	dirstack=("${(@f)"$(< "$DIRSTACKFILE")"}")
-	[[ -d "${dirstack[1]}" ]] && cd -- "${dirstack[1]}"
+    dirstack=("${(@f)"$(< "$DIRSTACKFILE")"}")
+    [[ -d "${dirstack[1]}" ]] && cd -- "${dirstack[1]}"
 fi
 chpwd_dirstack() {
-	print -l -- "$PWD" "${(u)dirstack[@]}" > "$DIRSTACKFILE"
+    print -l -- "$PWD" "${(u)dirstack[@]}" > "$DIRSTACKFILE"
 }
 add-zsh-hook -Uz chpwd chpwd_dirstack
 

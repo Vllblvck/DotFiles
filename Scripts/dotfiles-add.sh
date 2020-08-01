@@ -1,15 +1,10 @@
 #!/bin/bash
 
-if [[ $# -eq 0 ]]; then
-    echo "No commit message"
-    exit 0
-fi
-
 dotfiles=(
-	"Scripts/"
-	"Pictures/wallpapers/"
-	".moc/"
-	".xmonad/"
+    "Scripts/"
+    "Pictures/wallpapers/"
+    ".moc/"
+    ".xmonad/"
     ".gtkrc-2.0"
     ".p10k.zsh"
     ".xprofile"
@@ -31,6 +26,3 @@ git="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
 for file in "${dotfiles[@]}"; do
     $git add "$file"
 done
-
-$git commit -m "$1"
-$git push origin master

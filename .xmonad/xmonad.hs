@@ -53,7 +53,8 @@ stdinSeparatorColor = "#A3BE8C"
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
-myWebBrowser = "firefox"
+myMainBrowser = "firefox"
+mySecondaryBrowser = "qutebrowser"
 
 ------------------------------------------------------------------------
 -- Startup
@@ -116,11 +117,11 @@ myKeys =
 
     -- Launching apps
     , ("M-<Return>", spawn myTerminal)
-    , ("M-w", spawn myWebBrowser)
+    , ("M-w", spawn myMainBrowser)
+    , ("M-S-w", spawn mySecondaryBrowser)
     , ("M-y", spawn (myTerminal ++ " -e pacmixer"))
     , ("M-r", spawn (myTerminal ++ " -e ranger"))
-    , ("M-S-s", spawn "flameshot gui")
-    , ("M-n", spawn (myTerminal ++ " -t nvim-dev -e nvim")) ]
+    , ("M-S-s", spawn "flameshot gui") ]
 ------------------------------------------------------------------------
 -- Scratchpads
 ------------------------------------------------------------------------
@@ -151,20 +152,22 @@ myLayout =
 
 myManageHook = composeAll
     [ namedScratchpadManageHook myScratchpads
-    , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 0)
-    , className =? "LBRY"            --> doShift ( myWorkspaces !! 0)
-    , className =? "firefox"         --> doShift ( myWorkspaces !! 0)
-    , className =? "Brave-browser"   --> doShift ( myWorkspaces !! 0)
-    , title     =? "nvim-dev"        --> doShift ( myWorkspaces !! 2)
-    , className =? "code-oss"        --> doShift ( myWorkspaces !! 2)
-    , className =? "jetbrains-rider" --> doShift ( myWorkspaces !! 2)
-    , className =? "Caprine"         --> doShift ( myWorkspaces !! 3)
-    , className =? "discord"         --> doShift ( myWorkspaces !! 3)
-    , className =? "Steam"           --> doShift ( myWorkspaces !! 4)
-    , className =? "Thunderbird"     --> doShift ( myWorkspaces !! 6)
-    , className =? "qBittorrent"     --> doShift ( myWorkspaces !! 7)
-    , className =? "Virt-manager"    --> doShift ( myWorkspaces !! 8)
-    , resource  =? "desktop_window"  --> doIgnore
+    , className =? "qutebrowser"      --> doShift ( myWorkspaces !! 0 )
+    , className =? "LBRY"             --> doShift ( myWorkspaces !! 0 )
+    , className =? "firefox"          --> doShift ( myWorkspaces !! 0 )
+    , className =? "Brave-browser"    --> doShift ( myWorkspaces !! 0 )
+    , title     =? "nvim-dev"         --> doShift ( myWorkspaces !! 2 )
+    , className =? "code-oss"         --> doShift ( myWorkspaces !! 2 )
+    , className =? "jetbrains-rider"  --> doShift ( myWorkspaces !! 2 )
+    , className =? "jetbrains-studio" --> doShift ( myWorkspaces !! 2 )
+    , className =? "Caprine"          --> doShift ( myWorkspaces !! 3 )
+    , className =? "discord"          --> doShift ( myWorkspaces !! 3 )
+    , className =? "Steam"            --> doShift ( myWorkspaces !! 4 )
+    , className =? "Lutris"           --> doShift ( myWorkspaces !! 4 )
+    , className =? "Thunderbird"      --> doShift ( myWorkspaces !! 5 )
+    , className =? "qBittorrent"      --> doShift ( myWorkspaces !! 6 )
+    , className =? "Virt-manager"     --> doShift ( myWorkspaces !! 8 )
+    , resource  =? "desktop_window"   --> doIgnore
     , insertPosition End Newer ]
 
 ------------------------------------------------------------------------
@@ -196,10 +199,10 @@ xmobarEscape = concatMap doubleLts
         doubleLts x   = [x]
         
 myWorkspaces = clickable . (map xmobarEscape) 
-               $ ["WEB","TERM","DEV","CHAT","MISC","MUSIC","MAIL","TRNT","VIRT"]
+               $ ["WEB","TERM","DEV","CHAT","MISC","MAIL","TRNT","VIRT"]
   where
         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                      (i,ws) <- zip [1..9] l,
+                      (i,ws) <- zip [1..8] l,
                       let n = i ] 
 
 ------------------------------------------------------------------------
