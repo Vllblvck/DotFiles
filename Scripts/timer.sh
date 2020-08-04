@@ -15,11 +15,7 @@ while getopts :h:m:s: option; do
   esac
 done
 
-currTime=`date +%s`
-hoursToSec=$(($hours * 3600))
-minutesToSec=$(($minutes * 60))
-timeLeft=$(($hoursToSec + $minutesToSec + $seconds))
-
+timeLeft=$(($hours * 3600 + $minutes * 60 + $seconds))
 while [[ $timeLeft -gt 0 ]]; do
   clear
   timeLeft=$(($timeLeft - 1))
@@ -32,3 +28,4 @@ while [[ $timeLeft -gt 0 ]]; do
 done
 
 dunstify -a "timer" -u normal -r "$dunstMsgId" "  TIME IS UP!!!"
+mpv "$HOME/Scripts/assets/timer_sound.wav"
