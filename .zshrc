@@ -3,8 +3,8 @@
 ##############################################################################
 
 export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
-export VISUAL="/usr/bin/nvim"
-export EDITOR="/usr/bin/nvim"
+export VISUAL="nvim"
+export EDITOR="nvim"
 export TERM="alacritty"
 
 ##############################################################################
@@ -26,6 +26,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ~="cd ~"
 alias dir="dirs -v"
+alias rm="rm -I"
 
 # Programs
 alias v="nvim"
@@ -38,6 +39,7 @@ alias dotfiles-add="$HOME/Scripts/dotfiles-add.sh"
 alias arch-updates="$HOME/Scripts/arch-updates.sh"
 alias aur-updates="$HOME/Scripts/aur-updates.sh"
 alias pulse-volume="$HOME/Scripts/pulse-volume.sh"
+alias timer="$HOME/Scripts/timer.sh"
 
 # Misc
 alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"

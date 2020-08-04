@@ -25,9 +25,11 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Prompt.AppLauncher as AL
 import XMonad.Prompt.XMonad
 
 import XMonad.Actions.WithAll
@@ -36,6 +38,7 @@ import Data.Monoid
 import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M 
+import Control.Arrow (first)
 
 ------------------------------------------------------------------------
 -- Settings
@@ -50,6 +53,7 @@ urgentWorkspaceColor = "#BF616A"
 windowTitleColor = "#D8DEE9" 
 layoutNameColor = "#81A1C1"
 stdinSeparatorColor = "#A3BE8C"
+
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
@@ -75,11 +79,10 @@ myKeys =
 
     -- Xmonad
     [ ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-    , ("M-x c", io (exitWith ExitSuccess)) 
-    , ("M-x s", spawn "systemctl poweroff")
-    , ("M-x r", spawn "systemctl reboot")
-    , ("M-x l", spawn "betterlockscreen -l")
     , ("M-d", shellPrompt shellXPConfig)
+    , ("M-x", xmonadPromptC customPromptActions shellXPConfig)
+    , ("M-p n", AL.launchApp shellXPConfig (myTerminal ++ " -e nvim"))
+    , ("M-p w", AL.launchApp shellXPConfig myMainBrowser)
 
     -- Windows
     , ("M-S-q", kill)
@@ -122,6 +125,7 @@ myKeys =
     , ("M-y", spawn (myTerminal ++ " -e pacmixer"))
     , ("M-r", spawn (myTerminal ++ " -e ranger"))
     , ("M-S-s", spawn "flameshot gui") ]
+
 ------------------------------------------------------------------------
 -- Scratchpads
 ------------------------------------------------------------------------
@@ -189,6 +193,19 @@ shellXPConfig = def
       , maxComplRows        = Just 2 
       }
 
+customPromptActions :: [(String, X())]
+customPromptActions = 
+    [ ("shutdown", spawn "systemctl poweroff")
+    , ("reboot", spawn "systemctl reboot")
+    , ("lock", spawn "betterlockscreen -l")
+    , ("close", io (exitWith ExitSuccess)) ]
+
+--customPromptKeymap :: M.Map (KeyMask, KeySym) (XP ())
+--customPromptKeymap = M.fromList $
+    --map (first $ (,) mod1Mask)
+    --[ (xK_f, moveCursor Next)
+    --, (xK_b, moveCursor Prev) ]
+
 ------------------------------------------------------------------------
 -- Workspaces
 ------------------------------------------------------------------------
@@ -211,7 +228,7 @@ myWorkspaces = clickable . (map xmobarEscape)
 
 main = do
     xmproc <- spawnPipe "xmobar /home/vllblvck/.config/xmobar/xmobarrc"
-    xmonad $ docks def 
+    xmonad $ withUrgencyHook NoUrgencyHook $ docks def 
         {
         terminal           = myTerminal,
         modMask            = myModKey,
@@ -230,7 +247,7 @@ main = do
 				 , ppHiddenNoWindows = xmobarColor visibleWorkspaceColor ""
 				 , ppLayout = xmobarColor layoutNameColor ""
 				 , ppSep = "<fc=" ++ stdinSeparatorColor ++ "> || </fc>"
-				 , ppUrgent = xmobarColor urgentWorkspaceColor "" 
+                                 , ppUrgent = xmobarColor urgentWorkspaceColor "" .wrap "!" "!"
 				 , ppOrder = \(ws:l:_:_) -> [ws,l]
 		  		 },
         handleEventHook    = mempty,

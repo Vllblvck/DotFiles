@@ -1,7 +1,7 @@
 
-xmonad.hs:146:1: warning: [-Wtabs]
-    Tab character found here, and in 42 further locations.
+xmonad.hs:150:1: warning: [-Wtabs]
+    Tab character found here, and in 38 further locations.
     Please use spaces instead.
     |
-146 |                mCol = multiCol [1] 1 0.01 (-0.5)
+150 |                mCol = multiCol [1] 1 0.01 (-0.5)
     | ^^^^^^^^
