@@ -6,7 +6,7 @@ dotfiles=(
     ".moc/"
     ".xmonad/"
     ".gtkrc-2.0"
-    ".p10k.zsh"
+    ".stalonetrayrc"
     ".xprofile"
     ".zshrc"
     ".config/alacritty/"

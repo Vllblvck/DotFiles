@@ -70,6 +70,7 @@ myStartupHook = do
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
     spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_purple.jpg &"
+    spawnOnce "stalonetray --icon-size=20 --kludges=force_icons_size"
 
 ------------------------------------------------------------------------
 -- Key bindings

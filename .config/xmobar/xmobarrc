@@ -1,10 +1,9 @@
 Config { font = "xft:Mononoki Nerd Font:pixelsize=13"
        , additionalFonts = [ "xft:FontAwesome:pixelsize=13"]
-       , bgColor = "#2E4034"
+       , bgColor = "#2E3440"
        , fgColor = "#D8DEE9"
-       , alpha = 190 
        , border = NoBorder
-       , position = Top
+       , position = Static { xpos = 0 , ypos = 0, width = 1860, height = 20 }
        , lowerOnStart = True
        , persistent = True
        , hideOnStart = False
@@ -19,5 +18,5 @@ Config { font = "xft:Mononoki Nerd Font:pixelsize=13"
                     , Run UnsafeStdinReader ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader% }{ %cpu%<fc=#A3BE8C> || </fc>%memory%<fc=#A3BE8C> || </fc><fc=#EBCB8B>  Arch: %arch_updates%    Aur: %aur_updates%</fc><fc=#A3BE8C> || </fc><fc=#B48EAD>%date%</fc> "
+       , template = " %UnsafeStdinReader% }{ %cpu%<fc=#A3BE8C> || </fc>%memory%<fc=#A3BE8C> || </fc><fc=#EBCB8B>  Arch: %arch_updates%    Aur: %aur_updates%</fc><fc=#A3BE8C> || </fc><fc=#B48EAD>%date%</fc><fc=#A3BE8C> ||</fc>"
        }
