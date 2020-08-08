@@ -22,6 +22,7 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.SetWMName
@@ -173,7 +174,7 @@ myManageHook = composeAll
     , className =? "qBittorrent"      --> doShift ( myWorkspaces !! 6 )
     , className =? "Virt-manager"     --> doShift ( myWorkspaces !! 8 )
     , resource  =? "desktop_window"   --> doIgnore
-    , insertPosition End Newer ]
+    , fmap not isDialog               --> insertPosition End Newer ]
 
 ------------------------------------------------------------------------
 -- Xprompt
