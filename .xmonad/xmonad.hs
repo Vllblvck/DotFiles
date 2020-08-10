@@ -72,6 +72,7 @@ myStartupHook = do
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
     spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_purple.jpg &"
     spawnOnce "stalonetray --icon-size=20 --kludges=force_icons_size"
+    spawnOnce "qbittorrent"
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -158,23 +159,25 @@ myLayout =
 
 myManageHook = composeAll
     [ namedScratchpadManageHook myScratchpads
-    , className =? "qutebrowser"      --> doShift ( myWorkspaces !! 0 )
-    , className =? "LBRY"             --> doShift ( myWorkspaces !! 0 )
-    , className =? "firefox"          --> doShift ( myWorkspaces !! 0 )
-    , className =? "Brave-browser"    --> doShift ( myWorkspaces !! 0 )
-    , title     =? "nvim-dev"         --> doShift ( myWorkspaces !! 2 )
-    , className =? "code-oss"         --> doShift ( myWorkspaces !! 2 )
-    , className =? "jetbrains-rider"  --> doShift ( myWorkspaces !! 2 )
-    , className =? "jetbrains-studio" --> doShift ( myWorkspaces !! 2 )
-    , className =? "Caprine"          --> doShift ( myWorkspaces !! 3 )
-    , className =? "discord"          --> doShift ( myWorkspaces !! 3 )
-    , className =? "Steam"            --> doShift ( myWorkspaces !! 4 )
-    , className =? "Lutris"           --> doShift ( myWorkspaces !! 4 )
-    , className =? "Thunderbird"      --> doShift ( myWorkspaces !! 5 )
-    , className =? "qBittorrent"      --> doShift ( myWorkspaces !! 6 )
-    , className =? "Virt-manager"     --> doShift ( myWorkspaces !! 8 )
-    , resource  =? "desktop_window"   --> doIgnore
-    , fmap not isDialog               --> insertPosition End Newer ]
+    , className =? "qutebrowser"        --> doShift ( myWorkspaces !! 0 )
+    , className =? "LBRY"               --> doShift ( myWorkspaces !! 0 )
+    , className =? "firefox"            --> doShift ( myWorkspaces !! 0 )
+    , className =? "Brave-browser"      --> doShift ( myWorkspaces !! 0 )
+    , title     =? "nvim-dev"           --> doShift ( myWorkspaces !! 2 )
+    , className =? "code-oss"           --> doShift ( myWorkspaces !! 2 )
+    , className =? "jetbrains-rider"    --> doShift ( myWorkspaces !! 2 )
+    , className =? "jetbrains-studio"   --> doShift ( myWorkspaces !! 2 )
+    , className =? "Caprine"            --> doShift ( myWorkspaces !! 3 )
+    , className =? "discord"            --> doShift ( myWorkspaces !! 3 )
+    , className =? "Steam"              --> doShift ( myWorkspaces !! 4 )
+    , className =? "Lutris"             --> doShift ( myWorkspaces !! 4 )
+    , className =? "Thunderbird"        --> doShift ( myWorkspaces !! 5 )
+    , className =? "qBittorrent"        --> doShift ( myWorkspaces !! 6 )
+    , className =? "Virt-manager"       --> doShift ( myWorkspaces !! 8 )
+    -- for some reason this opton makes virtualbox crash on launhch
+    --, className =? "VirtualBox Manager" --> doShift ( myWorkspaces !! 8 )
+    , resource  =? "desktop_window"     --> doIgnore
+    , fmap not isDialog                 --> insertPosition End Newer ]
 
 ------------------------------------------------------------------------
 -- Xprompt

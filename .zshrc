@@ -35,14 +35,14 @@ alias r="ranger"
 # Scripts
 alias ex="$HOME/Scripts/extract.sh"
 alias yt="$HOME/Scripts/yt-music.sh"
-alias dotfiles-add="$HOME/Scripts/dotfiles-add.sh"
+alias dot-add="$HOME/Scripts/dotfiles-add.sh"
 alias arch-updates="$HOME/Scripts/arch-updates.sh"
 alias aur-updates="$HOME/Scripts/aur-updates.sh"
 alias pulse-volume="$HOME/Scripts/pulse-volume.sh"
 alias timer="$HOME/Scripts/timer.sh"
 
 # Misc
-alias dotfiles="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
+alias dot="/usr/bin/git --git-dir=$HOME/Projects/DotFiles/ --work-tree=$HOME"
 alias weather="curl wttr.in"
 alias xmonconf="nvim $HOME/.xmonad/xmonad.hs"
 alias xbarconf="nvim $HOME/.config/xmobar/xmobarrc"
