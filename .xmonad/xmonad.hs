@@ -71,8 +71,9 @@ myStartupHook = do
     spawnOnce "dunst &"
     spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
     spawnOnce "betterlockscreen -u /usr/share/backgrounds/mountains_purple.jpg &"
-    spawnOnce "stalonetray --icon-size=20 --kludges=force_icons_size"
-    spawnOnce "qbittorrent"
+    spawnOnce "stalonetray --icon-size=20 --kludges=force_icons_size &"
+    spawnOnce ("udiskie -s -N -f \"" ++ myTerminal ++ " -e ranger\" &")
+    spawnOnce "qbittorrent &"
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -127,6 +128,7 @@ myKeys =
     , ("M-S-w", spawn mySecondaryBrowser)
     , ("M-y", spawn (myTerminal ++ " -e pacmixer"))
     , ("M-r", spawn (myTerminal ++ " -e ranger"))
+    , ("M-z", spawn "caprine")
     , ("M-S-s", spawn "flameshot gui") ]
 
 ------------------------------------------------------------------------

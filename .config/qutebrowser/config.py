@@ -20,12 +20,12 @@ c.auto_save.session = False
 c.completion.open_categories = ['quickmarks', 'bookmarks', 'history', 'searchengines']
 
 # Start pages
-c.url.start_pages = ['https://duckduckgo.com']
+c.url.start_pages = ['https://google.com']
 
 # Search engine
 c.url.searchengines = {
-    'DEFAULT': 'https://duckduckgo.com/?q={}',
-    'google': 'https://google.com/search?q={}'
+    'DEFAULT': 'https://google.com/search?q={}',
+    'duck': 'https://duckduckgo.com/?q={}'
 }
 
 # Aliases
