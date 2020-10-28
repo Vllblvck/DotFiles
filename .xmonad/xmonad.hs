@@ -45,20 +45,19 @@ import Control.Arrow (first)
 -- Settings
 ------------------------------------------------------------------------
 
-myNormalBorderColor  = "#2E3440"
-myFocusedBorderColor = "#81A1C1"
-currentWorkspaceColor = "#81A1C1"
-hiddenWorkspaceColor = "#D8DEE9"
-visibleWorkspaceColor = "#5B687F"
-urgentWorkspaceColor = "#BF616A"
-windowTitleColor = "#D8DEE9" 
-layoutNameColor = "#81A1C1"
-stdinSeparatorColor = "#A3BE8C"
+myNormalBorderColor  = "#232627"
+myFocusedBorderColor = "#1abc9c"
+currentWorkspaceColor = "#1abc9c"
+hiddenWorkspaceColor = "#63686d"
+visibleWorkspaceColor = "#fcfcfc"
+urgentWorkspaceColor = "#ed1515"
+layoutNameColor = "#1abc9c"
+stdinSeparatorColor = "#11d116"
 
 myModKey = mod4Mask
 myBorderWidth = 2
 myTerminal = "alacritty"
-myMainBrowser = "firefox"
+myMainBrowser = "brave"
 mySecondaryBrowser = "qutebrowser"
 
 ------------------------------------------------------------------------
@@ -188,10 +187,10 @@ myManageHook = composeAll
 shellXPConfig :: XPConfig
 shellXPConfig = def
       { font                = "xft:Mononoki Nerd Font:size=12"
-      , bgColor             = "#2E3440"
-      , fgColor             = "#D8DEE9"
-      , bgHLight            = "#81A1C1"
-      , fgHLight            = "#D8DEE9"
+      , bgColor             = "#232627"
+      , fgColor             = "#fcfcfc"
+      , bgHLight            = "#1abc9c"
+      , fgHLight            = "#232627"
       , promptBorderWidth   = 0
       , position            = Top
       , height              = 20

@@ -6,6 +6,7 @@ call plug#begin('~/.local/share/nvim/site/autoload/')
 
 "Misc
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "Auto completion and stuff
+Plug 'OmniSharp/omnisharp-vim'
 Plug 'scrooloose/nerdcommenter' "Auto comment
 Plug 'scrooloose/nerdtree' "File tree
 Plug 'vim-airline/vim-airline' "Status bar
@@ -56,12 +57,12 @@ set relativenumber
 set expandtab
 set autoindent
 
-autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80
-autocmd FileType html,htmldjango,css,javascript,vue,c,sh setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType python,java setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80
+autocmd FileType html,htmldjango,css,javascript,vue,c,sh,yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " Colorscheme
-colorscheme nord
-autocmd FileType python,haskell,html,htmldjango,css,javascript,vue,c colorscheme gruvbox
+colorscheme gruvbox
+"autocmd FileType python,haskell,html,htmldjango,css,javascript,vue,c,cs,java colorscheme gruvbox
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COC SETTINGS

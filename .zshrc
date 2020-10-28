@@ -3,6 +3,7 @@
 ##############################################################################
 
 export PATH="${PATH}:/home/vllblvck/.dotnet/tools"
+export PATH="${PATH}:/opt/mssql-tools/bin"
 export VISUAL="nvim"
 export EDITOR="nvim"
 export TERM="alacritty"
