@@ -3,7 +3,7 @@ import socket
 from threading import Thread
 
 
-HOSTNAME = "159.205.2.228"
+HOSTNAME = "127.0.0.1"
 THREADS_NR = 10
 START_PORT = 1
 END_PORT = 65535
